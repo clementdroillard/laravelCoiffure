@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Salons;
+use App\SalonClients;
 
 class salonController extends Controller
 {
@@ -77,4 +78,27 @@ class salonController extends Controller
     {
         return Salons::destroy($id);
     }
+
+
+    //authentification du salon
+    public function auth(Request $request)
+    {
+        return Salons::where('nomDeCompte',$request->nomDeCompte)->where('motDePasse',$request->motDePasse)->firstOrFail();
+    }
+
+    //fonction qui retourne les salons du client
+    public function salonsByClient($idClient)
+    {
+        $salonClients = SalonClients::where('client_id',$idClient)->where('validate',1)->get();
+        if($salonClients != "")
+        {
+            foreach ($salonClients as $salonClient) {
+                $salons[] = Salons::find($salonClient->salon_id);
+            }
+        }
+        return $salons;
+
+        
+    }
+
 }

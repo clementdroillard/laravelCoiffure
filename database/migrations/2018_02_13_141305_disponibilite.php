@@ -16,7 +16,7 @@ class Disponibilite extends Migration
         Schema::create('disponibilites', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('coiffeur_id')->unsigned();
-            $table->string('jourSemaine');
+            $table->integer('jourSemaine')->unsigned();
             $table->time('heureDebut');
             $table->time('heureFin');
             $table->timestamps();

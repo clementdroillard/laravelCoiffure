@@ -73,4 +73,9 @@ class coiffeurController extends Controller
     {
         return Coiffeurs::destroy($id);
     }
+
+    public function coiffeurBySalon($idSalon)
+    {
+        return Coiffeurs::where("salon_id",$idSalon)->get();
+    }
 }

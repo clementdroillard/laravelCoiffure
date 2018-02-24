@@ -25,13 +25,21 @@ class clientController extends Controller
      */
     public function store(Request $request)
     {
-        $client = new Clients();
-        $client->nom = $request->nom;
-        $client->prenom = $request->prenom;
-        $client->adresseMail = $request->adresseMail;
-        $client->motDePasse = $request->motDePasse;
-        $client->save();
-        return Clients::find($client->id);
+        if((Clients::where('adresseMail',$request->adresseMail)->count()) > 0 )
+        {
+            //mail deja utilisé
+            return abort(400, 'Ce mail est déja utilisé.');
+        }
+        else
+        {
+            $client = new Clients();
+            $client->nom = $request->nom;
+            $client->prenom = $request->prenom;
+            $client->adresseMail = $request->adresseMail;
+            $client->motDePasse = $request->motDePasse;
+            $client->save();
+            return Clients::find($client->id);
+        }       
     }
 
     /**
@@ -73,4 +81,12 @@ class clientController extends Controller
     {
         return Clients::destroy($id);
     }
+
+
+    //authentification du client
+    public function auth(Request $request)
+    {
+        return Clients::where('adresseMail',$request->adresseMail)->where('motDePasse',$request->motDePasse)->firstOrFail();
+    }
+
 }

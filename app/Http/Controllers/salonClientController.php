@@ -73,4 +73,5 @@ class salonClientController extends Controller
     {
         return SalonClients::destroy($id);
     }
+
 }

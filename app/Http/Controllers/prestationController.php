@@ -73,4 +73,9 @@ class prestationController extends Controller
     {
         return Prestations::destroy($id);
     }
+
+    public function prestationBySalon($idSalon)
+    {
+        return Prestations::where("salon_id",$idSalon)->get();
+    }
 }

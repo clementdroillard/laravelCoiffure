@@ -19,12 +19,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+
 //Salon 
 Route::get('/salons', 'salonController@index');
 Route::get('/salon/{id}', 'salonController@show');
 Route::post('/salon', 'salonController@store');
 Route::put('/salon/{id}', 'salonController@update');
 Route::delete('/salon/{id}', 'salonController@destroy');
+Route::post('/salon/auth', 'salonController@auth');
+Route::get('/salons/client/{idClient}', 'salonController@salonsByClient');
 
 //Client
 Route::get('/clients', 'clientController@index');
@@ -32,6 +35,7 @@ Route::get('/client/{id}', 'clientController@show');
 Route::post('/client', 'clientController@store');
 Route::put('/client/{id}', 'clientController@update');
 Route::delete('/client/{id}', 'clientController@destroy');
+Route::post('/client/auth', 'clientController@auth');
 
 
 //Salon_Client
@@ -42,13 +46,14 @@ Route::put('/salonClient/{id}', 'salonClientController@update');
 Route::delete('/salonClient/{id}', 'salonClientController@destroy');
 
 
+
 //Coiffeur
 Route::get('/coiffeurs', 'coiffeurController@index');
 Route::get('/coiffeur/{id}', 'coiffeurController@show');
 Route::post('/coiffeur', 'coiffeurController@store');
 Route::put('/coiffeur/{id}', 'coiffeurController@update');
 Route::delete('/coiffeur/{id}', 'coiffeurController@destroy');
-
+Route::get('/coiffeur/salon/{idSalon}', 'coiffeurController@coiffeurBySalon');
 
 //Prestation
 Route::get('/prestations', 'prestationController@index');
@@ -56,7 +61,7 @@ Route::get('/prestation/{id}', 'prestationController@show');
 Route::post('/prestation', 'prestationController@store');
 Route::put('/prestation/{id}', 'prestationController@update');
 Route::delete('/prestation/{id}', 'prestationController@destroy');
-
+Route::get('/prestation/salon/{idSalon}', 'prestationController@prestationBySalon');
 
 
 //RDV
