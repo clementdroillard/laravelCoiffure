@@ -73,4 +73,9 @@ class disponibiliteController extends Controller
     {
         return Disponibilites::destroy($id);
     }
+
+    public function disponibiliteByCoiffeur($idCoiffeur)
+    {
+        return Disponibilites::where("coiffeur_id",$idCoiffeur)->get();
+    }
 }

@@ -70,6 +70,7 @@ Route::get('/rdv/{id}', 'rdvController@show');
 Route::post('/rdv', 'rdvController@store');
 Route::put('/rdv/{id}', 'rdvController@update');
 Route::delete('/rdv/{id}', 'rdvController@destroy');
+Route::get('/rdv/coiffeur/{coiffeurId}/{dateDebut}/{dateFin}', 'rdvController@rdvByCoiffeur');
 
 
 
@@ -79,7 +80,7 @@ Route::get('/disponibilite/{id}', 'disponibiliteController@show');
 Route::post('/disponibilite', 'disponibiliteController@store');
 Route::put('/disponibilite/{id}', 'disponibiliteController@update');
 Route::delete('/disponibilite/{id}', 'disponibiliteController@destroy');
-
+Route::get('/disponibilite/coiffeur/{coiffeurId}', 'disponibiliteController@disponibiliteByCoiffeur');
 
 //Indisponibilité
 Route::get('/indisponibilites', 'indisponibiliteController@index');
@@ -87,5 +88,6 @@ Route::get('/indisponibilite/{id}', 'indisponibiliteController@show');
 Route::post('/indisponibilite', 'indisponibiliteController@store');
 Route::put('/indisponibilite/{id}', 'indisponibiliteController@update');
 Route::delete('/indisponibilite/{id}', 'indisponibiliteController@destroy');
+Route::get('/indisponibilite/coiffeur/{coiffeurId}/{dateDebut}/{dateFin}', 'indisponibiliteController@indisponibiliteByCoiffeur');
 
 

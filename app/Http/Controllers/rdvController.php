@@ -106,4 +106,10 @@ class rdvController extends Controller
     {
         return Rdvs::destroy($id);
     }
+
+
+    public function rdvByCoiffeur($idCoiffeur,$dateDebut,$dateFin)
+    {
+        return Rdvs::where("coiffeur_id",$idCoiffeur)->where('dateDebut','<',$dateFin)->where('dateFin','>',$dateDebut)->get();
+    }
 }

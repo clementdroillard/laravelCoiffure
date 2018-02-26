@@ -71,4 +71,10 @@ class indisponibiliteController extends Controller
     {
         return Indisponibilites::destroy($id);
     }
+
+    public function indisponibiliteByCoiffeur($idCoiffeur,$dateDebut,$dateFin)
+    {
+        return Indisponibilites::where("coiffeur_id",$idCoiffeur)->where('dateDebut','<',$dateFin)->where('dateFin','>',$dateDebut)->get();
+    }
+
 }
