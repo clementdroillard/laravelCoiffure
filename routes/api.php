@@ -68,6 +68,7 @@ Route::get('/prestation/salon/{idSalon}', 'prestationController@prestationBySalo
 Route::get('/rdvs', 'rdvController@index');
 Route::get('/rdv/{id}', 'rdvController@show');
 Route::post('/rdv', 'rdvController@store');
+Route::post('/rdv/client', 'rdvController@storeForClient');
 Route::put('/rdv/{id}', 'rdvController@update');
 Route::delete('/rdv/{id}', 'rdvController@destroy');
 Route::get('/rdv/coiffeur/{coiffeurId}/{dateDebut}/{dateFin}', 'rdvController@rdvByCoiffeur');
