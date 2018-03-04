@@ -26,6 +26,13 @@ class salonController extends Controller
      */
     public function store(Request $request)
     {
+        if((Salons::where('nomDeCompte',$request->nomDeCompte)->count()) > 0 )
+        {
+            //mail deja utilisé
+            return abort(400, 'Ce nom de compte est déja utilisé.');
+        }
+        else
+        {
         $salon = new Salons();
         $salon->libelle = $request->libelle;
         $salon->adresse = $request->adresse;
@@ -35,6 +42,7 @@ class salonController extends Controller
         $salon->nomDeCompte = $request->nomDeCompte;
         $salon->save();
         return Salons::find($salon->id);
+        }
     }
 
     /**
@@ -96,9 +104,7 @@ class salonController extends Controller
                 $salons[] = Salons::find($salonClient->salon_id);
             }
         }
-        return $salons;
-
-        
+        return $salons;      
     }
 
 }

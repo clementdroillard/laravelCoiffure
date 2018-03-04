@@ -41,15 +41,20 @@ class rdvController extends Controller
         return Rdvs::find($rdv->id);
     }
 
-        public function storeForClient(Request $request)
-    {
+    public function getDateFinForRdv($prestation_id,$dateDebutRdv){
         //conversion de la duree de prestation et de la dateDEbut pour les additionner
-        $TempsPrestation = json_decode(Prestations::find($request->prestation_id))->duree;
+        $TempsPrestation = json_decode(Prestations::find($prestation_id))->duree;
         $TempsPrestation = explode(":", $TempsPrestation);       
         $TempsPrestationInterval = new DateInterval('PT'.$TempsPrestation[0].'H'.$TempsPrestation[1].'M'.$TempsPrestation[2].'S');
-        $dateDebut = new DateTime($request->dateDebut);
+        $dateDebut = new DateTime($dateDebutRdv);
         //on ajoute le temps de la prestation a la date du debut pour obtenir la date de fin
-        $dateFin = date_add($dateDebut,$TempsPrestationInterval)->format('Y-m-d H:i:s');
+        return date_add($dateDebut,$TempsPrestationInterval)->format('Y-m-d H:i:s');
+    }
+
+    public function storeForClient(Request $request)
+    {
+        //on recupere la date de fin en fonction de la prestation et de la date de debut  
+        $dateFin = $this->getDateFinForRdv($request->prestation_id,$request->dateDebut);
 
         //convertion des dates recus
         $jour = date('w',strtotime($request->dateDebut));
@@ -88,6 +93,43 @@ class rdvController extends Controller
             $rdv->save();
             return Rdvs::find($rdv->id);
         }
+    }
+
+    public function storeForSalon(Request $request)
+    {
+        //on recupere la date de fin en fonction de la prestation et de la date de debut  
+        $dateFin = $this->getDateFinForRdv($request->prestation_id,$request->dateDebut);
+        
+        //convertion des dates recus
+        $jour = date('w',strtotime($request->dateDebut));
+        $heureDebut = date('H:i:s',strtotime($request->dateDebut));
+        $heureFin = date('H:i:s',strtotime($dateFin));
+
+        //vérifie si le coiffeur travaille a cette horraire habituellement
+        if((Disponibilites::where('heureDebut','<=',$heureDebut)->where('heureFin','>=',$heureFin)->where('jourSemaine',$jour)->where('coiffeur_id',$request->coiffeur_id)->count()) <= 0 )
+        {
+            //le coiffeur est pas dispo
+            return abort(400, 'Le coiffeur est indisponible sur cette plage horraire.');
+        }
+
+        //vérifie si le coiffeur est indisponible a cette horraire
+        elseif((Indisponibilites::where('dateDebut','<',$dateFin)->where('dateFin','>',$request->dateDebut)->where('coiffeur_id',$request->coiffeur_id)->count()) != 0 )
+        {
+            //le coiffeur a une indisponibilité
+            return abort(400, 'Le coiffeur est indisponible sur cette plage horraire.');
+        }
+        else
+        {
+            //le rdv possible
+            $rdv = new Rdvs();
+            $rdv->coiffeur_id = $request->coiffeur_id;
+            $rdv->client_id = $request->client_id;
+            $rdv->prestation_id = $request->prestation_id;
+            $rdv->dateDebut = $request->dateDebut;
+            $rdv->dateFin = $dateFin;
+            $rdv->save();
+            return Rdvs::find($rdv->id);
+        }        
     }
 
      /**

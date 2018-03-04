@@ -36,12 +36,13 @@ Route::post('/client', 'clientController@store');
 Route::put('/client/{id}', 'clientController@update');
 Route::delete('/client/{id}', 'clientController@destroy');
 Route::post('/client/auth', 'clientController@auth');
-
+Route::get('/clients/salon/{idSalon}', 'clientController@clientBySalon');
 
 //Salon_Client
 Route::get('/salonClients', 'salonClientController@index');
 Route::get('/salonClient/{id}', 'salonClientController@show');
 Route::post('/salonClient', 'salonClientController@store');
+Route::post('/salonClient/salon/{mail}', 'salonClientController@storeForSalon');
 Route::put('/salonClient/{id}', 'salonClientController@update');
 Route::delete('/salonClient/{id}', 'salonClientController@destroy');
 
@@ -69,6 +70,7 @@ Route::get('/rdvs', 'rdvController@index');
 Route::get('/rdv/{id}', 'rdvController@show');
 Route::post('/rdv', 'rdvController@store');
 Route::post('/rdv/client', 'rdvController@storeForClient');
+Route::post('/rdv/salon', 'rdvController@storeForSalon');
 Route::put('/rdv/{id}', 'rdvController@update');
 Route::delete('/rdv/{id}', 'rdvController@destroy');
 Route::get('/rdv/coiffeur/{coiffeurId}/{dateDebut}/{dateFin}', 'rdvController@rdvByCoiffeur');

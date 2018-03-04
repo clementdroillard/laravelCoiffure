@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SalonClients;
+use App\Clients;
 
 class salonClientController extends Controller
 {
@@ -32,6 +33,37 @@ class salonClientController extends Controller
         $salonClients->validate = $request->validate;
         $salonClients->save();
         return SalonClients::find($salonClients->id);
+    }
+
+    //ajouter un client au salon en fonction de son mail.
+    public function storeForSalon(Request $request,$mail)
+    {
+        $client = json_decode(Clients::where('adresseMail',$mail)->first());
+        //on verifie si le mail du client existe 
+        if(isset($client->id))
+        {
+            //verifie si il n'est pas deja client du salon
+            if(SalonClients::where('salon_id',$request->salon_id)->where('client_id',$client->id)->count() == 0)
+            {
+                $salonClients = new SalonClients();
+                $salonClients->salon_id = $request->salon_id;
+                $salonClients->client_id = $client->id;
+                $salonClients->code = '';
+                $salonClients->validate = 1;
+                $salonClients->save();
+                return SalonClients::find($salonClients->id);
+            }
+            else
+            {
+                return abort(401, 'Il est deja client.');
+            }
+
+        }
+        else
+        {
+            return abort(400, 'Le mail existe pas.');
+        }
+
     }
 
     /**
