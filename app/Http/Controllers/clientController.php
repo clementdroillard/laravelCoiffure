@@ -38,6 +38,7 @@ class clientController extends Controller
             $client->prenom = $request->prenom;
             $client->adresseMail = $request->adresseMail;
             $client->motDePasse = $request->motDePasse;
+            $client->telephone = $request->telephone;
             $client->save();
             return Clients::find($client->id);
         }       
@@ -68,6 +69,7 @@ class clientController extends Controller
         $client->prenom = $request->prenom;
         $client->adresseMail = $request->adresseMail;
         $client->motDePasse = $request->motDePasse;
+        $client->telephone = $request->telephone;
         $client->save();
         return $client;
     }

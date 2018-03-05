@@ -30,6 +30,7 @@ class prestationController extends Controller
         $prestation->libelle = $request->libelle;
         $prestation->prix = $request->prix;
         $prestation->duree = $request->duree;
+        $prestation->validate = $request->validate;
         $prestation->save();
         return Prestations::find($prestation->id);
     }
@@ -42,7 +43,7 @@ class prestationController extends Controller
      */
     public function show($id)
     {
-    	$prestation = Prestations::find($id);
+    	return Prestations::find($id);
     }
 
     /**
@@ -59,6 +60,7 @@ class prestationController extends Controller
         $prestation->libelle = $request->libelle;
         $prestation->prix = $request->prix;
         $prestation->duree = $request->duree;
+        $prestation->validate = $request->validate;
         $prestation->save();
         return $prestation;
     }
@@ -76,6 +78,6 @@ class prestationController extends Controller
 
     public function prestationBySalon($idSalon)
     {
-        return Prestations::where("salon_id",$idSalon)->get();
+        return Prestations::where("salon_id",$idSalon)->where('validate',1)->get();
     }
 }

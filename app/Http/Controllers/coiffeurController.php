@@ -16,7 +16,6 @@ class coiffeurController extends Controller
     {
         return Coiffeurs::all();
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -30,6 +29,7 @@ class coiffeurController extends Controller
         $coiffeur->nom = $request->nom;
         $coiffeur->prenom = $request->prenom;
         $coiffeur->specialite = $request->specialite;
+        $coiffeur->validate = $request->validate;
         $coiffeur->save();
         return Coiffeurs::find($coiffeur->id);
     }
@@ -42,7 +42,7 @@ class coiffeurController extends Controller
      */
     public function show($id)
     {
-    	$coiffeur = Coiffeurs::find($id);
+    	return $coiffeur = Coiffeurs::find($id);
     }
 
     /**
@@ -59,6 +59,7 @@ class coiffeurController extends Controller
         $coiffeur->nom = $request->nom;
         $coiffeur->prenom = $request->prenom;
         $coiffeur->specialite = $request->specialite;
+        $coiffeur->validate = $request->validate;
         $coiffeur->save();
         return $coiffeur;
     }
@@ -76,6 +77,26 @@ class coiffeurController extends Controller
 
     public function coiffeurBySalon($idSalon)
     {
+        return Coiffeurs::where("salon_id",$idSalon)->where("validate",true)->get();
+    }
+
+    public function coiffeurBySalonAll($idSalon)
+    {
         return Coiffeurs::where("salon_id",$idSalon)->get();
+    }
+
+    public function changeValidate(Request $request)
+    {
+        if(Coiffeurs::where("salon_id",$request->salon_id)->where('id',$request->id)->count() > 0)
+        {
+            $coiffeur = Coiffeurs::find($request->id);
+            $coiffeur->validate = 1-$coiffeur->validate;
+            $coiffeur->save();
+            return $coiffeur;
+        }
+        else
+        {
+            return abort(400, 'Coiffeur innexistant pour le salon.');
+        }
     }
 }

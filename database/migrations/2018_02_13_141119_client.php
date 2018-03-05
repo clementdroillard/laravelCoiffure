@@ -19,6 +19,7 @@ class Client extends Migration
             $table->string('prenom');
             $table->string('adresseMail');
             $table->string('motDePasse');
+            $table->string('telephone');
             $table->timestamps();
         });
     }

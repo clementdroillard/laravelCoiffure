@@ -53,8 +53,10 @@ Route::get('/coiffeurs', 'coiffeurController@index');
 Route::get('/coiffeur/{id}', 'coiffeurController@show');
 Route::post('/coiffeur', 'coiffeurController@store');
 Route::put('/coiffeur/{id}', 'coiffeurController@update');
+Route::put('/coiffeurValidate', 'coiffeurController@changeValidate');
 Route::delete('/coiffeur/{id}', 'coiffeurController@destroy');
 Route::get('/coiffeur/salon/{idSalon}', 'coiffeurController@coiffeurBySalon');
+Route::get('/coiffeur/salon/all/{idSalon}', 'coiffeurController@coiffeurBySalonAll');
 
 //Prestation
 Route::get('/prestations', 'prestationController@index');

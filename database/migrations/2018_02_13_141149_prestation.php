@@ -19,6 +19,7 @@ class Prestation extends Migration
             $table->string('libelle');
             $table->string('prix');
             $table->time('duree');
+            $table->boolean('validate')->default(true);
             $table->timestamps();
              $table->foreign('salon_id')->references('id')->on('salons');
         });

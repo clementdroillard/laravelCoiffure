@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coiffeurs extends Model
 {
-    protected $fillable = ['salon_id', 'nom','prenom','specialite'];
+    protected $fillable = ['salon_id', 'nom','prenom','specialite','validate'];
+    protected $casts = ['validate' => 'boolean'];
 }

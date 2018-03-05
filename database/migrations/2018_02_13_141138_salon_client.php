@@ -18,7 +18,7 @@ class SalonClient extends Migration
             $table->integer('salon_id')->unsigned();
             $table->integer('client_id')->unsigned();
             $table->string('code');
-            $table->boolean('validate')->default(false);
+            $table->boolean('validate')->default(true);
             $table->timestamps();
             $table->foreign('salon_id')->references('id')->on('salons');
             $table->foreign('client_id')->references('id')->on('clients');

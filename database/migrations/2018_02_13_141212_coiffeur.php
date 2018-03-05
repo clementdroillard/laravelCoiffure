@@ -19,6 +19,7 @@ class Coiffeur extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('specialite');
+            $table->boolean('validate')->default(true);
             $table->timestamps();
             $table->foreign('salon_id')->references('id')->on('salons');
         });
