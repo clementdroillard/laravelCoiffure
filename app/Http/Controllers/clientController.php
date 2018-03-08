@@ -92,7 +92,7 @@ class clientController extends Controller
         return Clients::where('adresseMail',$request->adresseMail)->where('motDePasse',$request->motDePasse)->firstOrFail();
     }
 
-    //fonction qui retourne les clients du salon
+    //fonction qui retourne les clients du salon activé
     public function clientBySalon($idSalon)
     {
         $salonClients = SalonClients::where('salon_id',$idSalon)->where('validate',1)->get();
@@ -103,6 +103,19 @@ class clientController extends Controller
             }
         }
         return $client;      
+    }
+
+    //fonction qui retourne les clients du salon désactivé
+    public function clientBySalonDeactive($idSalon)
+    {
+        $salonClients = SalonClients::where('salon_id',$idSalon)->where('validate',0)->get();
+        if($salonClients != "")
+        {
+            foreach ($salonClients as $salonClient) {
+                $client[] = Clients::find($salonClient->client_id);
+            }
+        }
+        return $client;        
     }
 
 }

@@ -106,4 +106,20 @@ class salonClientController extends Controller
         return SalonClients::destroy($id);
     }
 
+    //change le statut de validate de la relation salon_client
+    public function changeValidate(Request $request)
+    {
+        if(SalonClients::where("salon_id",$request->salon_id)->where('client_id',$request->client_id)->count() > 0)
+        {
+            $salonClient = SalonClients::where("salon_id",$request->salon_id)->where('client_id',$request->client_id)->first();
+            $salonClient->validate = 1-$salonClient->validate;
+            $salonClient->save();
+            return $salonClient;
+        }
+        else
+        {
+            return abort(400, 'Client innexistant pour le salon.');
+        }
+    }
+
 }

@@ -75,16 +75,19 @@ class coiffeurController extends Controller
         return Coiffeurs::destroy($id);
     }
 
+    //tout les coiffeurs du salon statut valide
     public function coiffeurBySalon($idSalon)
     {
         return Coiffeurs::where("salon_id",$idSalon)->where("validate",true)->get();
     }
 
+    //tout les coiffeurs du son
     public function coiffeurBySalonAll($idSalon)
     {
         return Coiffeurs::where("salon_id",$idSalon)->get();
     }
 
+    //on change le statut de validation si le salon_id et l'id du coiffeur corresponde
     public function changeValidate(Request $request)
     {
         if(Coiffeurs::where("salon_id",$request->salon_id)->where('id',$request->id)->count() > 0)

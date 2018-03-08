@@ -76,8 +76,31 @@ class prestationController extends Controller
         return Prestations::destroy($id);
     }
 
+    //les presttions avec le satut validate pour le salon
     public function prestationBySalon($idSalon)
     {
         return Prestations::where("salon_id",$idSalon)->where('validate',1)->get();
+    }
+
+    //les prestations du salon 
+    public function prestationBySalonAll($idSalon)
+    {
+        return Prestations::where("salon_id",$idSalon)->get();
+    }
+
+    //change le statut de la prestation
+    public function changeValidate(Request $request)
+    {
+        if(Prestations::where("salon_id",$request->salon_id)->where('id',$request->id)->count() > 0)
+        {
+            $prestation = Prestations::find($request->id);
+            $prestation->validate = 1-$prestation->validate;
+            $prestation->save();
+            return $prestation;
+        }
+        else
+        {
+            return abort(400, 'Prestation innexistant pour le salon.');
+        }
     }
 }

@@ -37,6 +37,7 @@ Route::put('/client/{id}', 'clientController@update');
 Route::delete('/client/{id}', 'clientController@destroy');
 Route::post('/client/auth', 'clientController@auth');
 Route::get('/clients/salon/{idSalon}', 'clientController@clientBySalon');
+Route::get('/clients/salon/desactivate/{idSalon}', 'clientController@clientBySalonDeactive');
 
 //Salon_Client
 Route::get('/salonClients', 'salonClientController@index');
@@ -44,6 +45,7 @@ Route::get('/salonClient/{id}', 'salonClientController@show');
 Route::post('/salonClient', 'salonClientController@store');
 Route::post('/salonClient/salon/{mail}', 'salonClientController@storeForSalon');
 Route::put('/salonClient/{id}', 'salonClientController@update');
+Route::put('/salonClientValidate', 'salonClientController@changeValidate');
 Route::delete('/salonClient/{id}', 'salonClientController@destroy');
 
 
@@ -63,9 +65,10 @@ Route::get('/prestations', 'prestationController@index');
 Route::get('/prestation/{id}', 'prestationController@show');
 Route::post('/prestation', 'prestationController@store');
 Route::put('/prestation/{id}', 'prestationController@update');
+Route::put('/prestationValidate', 'prestationController@changeValidate');
 Route::delete('/prestation/{id}', 'prestationController@destroy');
 Route::get('/prestation/salon/{idSalon}', 'prestationController@prestationBySalon');
-
+Route::get('/prestation/salon/all/{idSalon}', 'prestationController@prestationBySalonAll');
 
 //RDV
 Route::get('/rdvs', 'rdvController@index');
