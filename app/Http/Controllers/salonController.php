@@ -97,6 +97,7 @@ class salonController extends Controller
     //fonction qui retourne les salons du client
     public function salonsByClient($idClient)
     {
+        $salons = "";
         $salonClients = SalonClients::where('client_id',$idClient)->where('validate',1)->get();
         if($salonClients != "")
         {

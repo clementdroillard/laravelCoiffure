@@ -95,6 +95,7 @@ class clientController extends Controller
     //fonction qui retourne les clients du salon activé
     public function clientBySalon($idSalon)
     {
+        $client = "";
         $salonClients = SalonClients::where('salon_id',$idSalon)->where('validate',1)->get();
         if($salonClients != "")
         {
@@ -108,6 +109,7 @@ class clientController extends Controller
     //fonction qui retourne les clients du salon désactivé
     public function clientBySalonDeactive($idSalon)
     {
+        $client = "";
         $salonClients = SalonClients::where('salon_id',$idSalon)->where('validate',0)->get();
         if($salonClients != "")
         {
