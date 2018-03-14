@@ -69,7 +69,6 @@ Route::put('/prestationValidate', 'prestationController@changeValidate');
 Route::delete('/prestation/{id}', 'prestationController@destroy');
 Route::get('/prestation/salon/{idSalon}', 'prestationController@prestationBySalon');
 Route::get('/prestation/salon/all/{idSalon}', 'prestationController@prestationBySalonAll');
-Route::get('/prestation/salon/min/{idSalon}', 'prestationController@prestationBySalonMinDuree');
 
 //RDV
 Route::get('/rdvs', 'rdvController@index');

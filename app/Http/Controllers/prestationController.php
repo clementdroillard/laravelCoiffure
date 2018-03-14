@@ -88,12 +88,6 @@ class prestationController extends Controller
         return Prestations::where("salon_id",$idSalon)->get();
     }
 
-    //duree minimum des prestations du salon
-    public function prestationBySalonMinDuree($idSalon)
-    {
-        return Prestations::where("salon_id",$idSalon)->min('duree');
-    }
-
     //change le statut de la prestation
     public function changeValidate(Request $request)
     {
