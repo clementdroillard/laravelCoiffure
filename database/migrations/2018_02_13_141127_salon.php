@@ -20,7 +20,8 @@ class Salon extends Migration
             $table->string('ville');
             $table->string('CP');
             $table->string('motDePasse');
-            $table->string('nomDeCompte');
+            $table->string('telephone');
+            $table->string('adresseMail');
             $table->timestamps();
         });
     }

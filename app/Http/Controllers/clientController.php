@@ -120,4 +120,35 @@ class clientController extends Controller
         return $client;        
     }
 
+    //on verifie le mot de passe pour l'id client
+    public function updateWithConfirmPass(Request $request,$id)
+    {
+        $client = Clients::where('id',$id)->where('motDePasse',$request->oldMotDePasse)->count();
+        if( $client == 0)
+        {
+            //mot de passe faux
+            return abort(400, 'Mot de passe incorrect.');
+        }
+        else
+        {
+            if((Clients::where('adresseMail',$request->adresseMail)->count()) > 0 && $request->adresseMailOld != $request->adresseMail )
+            {
+                //mail deja utilisé
+                return abort(401, 'Ce mail est déja utilisé.');
+            }
+            else
+            {
+                $client = Clients::find($id);
+                $client->nom = $request->nom;
+                $client->prenom = $request->prenom;
+                $client->adresseMail = $request->adresseMail;
+                $client->motDePasse = $request->newMotDePasse;
+                $client->telephone = $request->telephone;
+                $client->save();
+                return $client;
+            }
+        }
+    } 
+
+
 }

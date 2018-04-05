@@ -26,10 +26,10 @@ class salonController extends Controller
      */
     public function store(Request $request)
     {
-        if((Salons::where('nomDeCompte',$request->nomDeCompte)->count()) > 0 )
+        if((Salons::where('adresseMail',$request->adresseMail)->count()) > 0 )
         {
             //mail deja utilisé
-            return abort(400, 'Ce nom de compte est déja utilisé.');
+            return abort(400, 'Ce mail est déja utilisé.');
         }
         else
         {
@@ -39,7 +39,8 @@ class salonController extends Controller
         $salon->ville = $request->ville;
         $salon->CP = $request->CP;
         $salon->motDePasse = $request->motDePasse;
-        $salon->nomDeCompte = $request->nomDeCompte;
+        $salon->adresseMail = $request->adresseMail;
+        $salon->telephone = $request->telephone;
         $salon->save();
         return Salons::find($salon->id);
         }
@@ -71,7 +72,8 @@ class salonController extends Controller
         $salon->ville = $request->ville;
         $salon->CP = $request->CP;
         $salon->motDePasse = $request->motDePasse;
-        $salon->nomDeCompte = $request->nomDeCompte;
+        $salon->adresseMail = $request->adresseMail;
+        $salon->telephone = $request->telephone;
         $salon->save();
         return $salon;
     }
@@ -91,7 +93,7 @@ class salonController extends Controller
     //authentification du salon
     public function auth(Request $request)
     {
-        return Salons::where('nomDeCompte',$request->nomDeCompte)->where('motDePasse',$request->motDePasse)->firstOrFail();
+        return Salons::where('adresseMail',$request->adresseMail)->where('motDePasse',$request->motDePasse)->firstOrFail();
     }
 
     //fonction qui retourne les salons du client
@@ -107,5 +109,37 @@ class salonController extends Controller
         }
         return $salons;      
     }
+
+    //on verifie le mot de passe pour l'id salon
+    public function updateWithConfirmPass(Request $request,$id)
+    {
+        $client = Salons::where('id',$id)->where('motDePasse',$request->oldMotDePasse)->count();
+        if( $client == 0)
+        {
+            //mot de passe faux
+            return abort(400, 'Mot de passe incorrect.');
+        }
+        else 
+        {
+             if((Salons::where('adresseMail',$request->adresseMail)->count()) > 0 && $request->adresseMail != $request->adresseMailOld)
+            {
+                //mail deja utilisé
+                return abort(401, 'Ce mail est déja utilisé.');
+            }
+            else
+            {
+                $salon = Salons::find($id);
+                $salon->libelle = $request->libelle;
+                $salon->adresse = $request->adresse;
+                $salon->ville = $request->ville;
+                $salon->CP = $request->CP;
+                $salon->motDePasse = $request->newMotDePasse;
+                $salon->adresseMail = $request->adresseMail;
+                $salon->telephone = $request->telephone;
+                $salon->save();
+                return $salon;
+            }
+        }
+    } 
 
 }
