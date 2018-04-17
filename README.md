@@ -9,7 +9,7 @@ Positionné vous dans le dossier :
 cd laravelCoiffure/
 
 Puis faire :
-composer update
+composer install
 
 Dans le fichier .env entrer vos paramètres de connexion à votre bdd.
 
