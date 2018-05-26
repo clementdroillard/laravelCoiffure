@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Prestation extends Migration
+class Article extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class Prestation extends Migration
      */
     public function up()
     {
-        Schema::create('prestations', function (Blueprint $table) {
+        Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('salon_id')->unsigned();
             $table->string('libelle');
+            $table->string('codeBarre');
             $table->string('prix');
-            $table->time('duree');
-            $table->boolean('validate')->default(true);
+            $table->integer('stock');
             $table->timestamps();
             $table->foreign('salon_id')->references('id')->on('salons');
         });
@@ -32,6 +32,6 @@ class Prestation extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prestations');
+        Schema::dropIfExists('articles');
     }
 }

@@ -100,4 +100,11 @@ Route::put('/indisponibilite/{id}', 'indisponibiliteController@update');
 Route::delete('/indisponibilite/{id}', 'indisponibiliteController@destroy');
 Route::get('/indisponibilite/coiffeur/{coiffeurId}/{dateDebut}/{dateFin}', 'indisponibiliteController@indisponibiliteByCoiffeur');
 
-
+//Articles
+Route::get('/articles', 'articleController@index');
+Route::get('/article/{id}', 'articleController@show');
+Route::post('/article', 'articleController@store');
+Route::put('/article/{id}', 'articleController@update');
+Route::put('/articleStock', 'articleController@updateStock');
+Route::delete('/article/{id}', 'articleController@destroy');
+Route::get('/article/salon/{idSalon}', 'articleController@articleBySalon');
